@@ -1,0 +1,52 @@
+﻿@model AppUserRole
+@{
+    ViewData["Title"] = "EditUser";
+    Layout = "~/Areas/Manager/Views/_LayoutAdminDark.cshtml";
+}
+<div class="col-md-6 offset-3 offset-3">
+    <h4>EditUser</h4>
+
+    <form asp-action="EditUser" asp-controller="Admin" asp-area="Manager" method="post">
+        <h4 class="f-w-400" DÜZENLE</h4>
+        <hr>
+        <div asp-validation-summary="All">  </div>
+       
+        <div class="form-group mb-3">
+            <input type="text" class="form-control" id="Name" placeholder="İsim" asp-for="User.Name">
+        </div>
+        <div class="form-group mb-3">
+            <input type="text" class="form-control" id="Surname" placeholder="Soyisim" asp-for="User.Surname">
+        </div>
+        <div class="form-group mb-3">
+            <input type="text" class="form-control" id="Email" placeholder="E-Posta" asp-for="User.Email">
+        </div>
+        <div class="form-group mb-3">
+            <input type="hidden" id="Username" asp-for="User.UserName">
+            <input type="hidden" id="Id" asp-for="User.Id">
+        </div>
+
+        <div class="form-group mb-4">
+            <input type="TcNo" class="form-control" id="TcNo" placeholder="TC No" asp-for="User.TcNo">
+        </div>
+
+        <div class="form-group mb-4">
+            <input type="PhoneNumber" class="form-control" id="PhoneNumber" placeholder="Telefon"
+                   asp-for="User.PhoneNumber">
+        </div>
+        <div class="form-group mb-4">
+
+            <label>Rol:</label>
+            <select id="districtSelect" class="form-control" style="background-color:black"
+                    asp-for="RoleId">
+                <option value="0">***Rol Seçiniz***</option>
+                @foreach (var item in ViewBag.Roles as List<AppRole>)
+                {
+                    <option value=@item.Id>@item.Name</option>
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block mb-4">DÜZENLE</button>
+    </form>
+
+</div>

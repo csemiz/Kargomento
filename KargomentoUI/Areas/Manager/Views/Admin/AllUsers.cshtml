@@ -1,0 +1,84 @@
+﻿@model List<AppUserRole>
+@{
+	ViewData["Title"] = "AllUsers";
+	Layout = "~/Areas/Manager/Views/_LayoutAdminDark.cshtml";
+}
+
+<h5>Sistemdeki Tüm Kullanıcılar</h5>
+@if (TempData["EditUserSuccessMessage"] != null)
+{
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		<i class="bi bi-check-circle-fill"></i>
+		@TempData["EditUserSuccessMessage"]
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+}
+
+ 
+@if (TempData["EditUserErrorMessage"]!= null)
+{
+	<div class="alert alert-error alert-dismissible fade show" role="alert">
+		<i class="bi bi-check-circle-fill"></i>
+		@TempData["EditUserErrorMessage"]
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+}
+
+
+<div class="col-12 col-md-10 offset-1 offset-1">
+
+
+	<div class="text-danger" asp-validation-summary="All"></div>
+
+	<table style="width:100%; border:solid ">
+		<tr>
+			<th style="border:solid">İSİM</th>
+			<th style="border:solid">SOYİSİM</th>
+			<th style="border:solid">USERNAME</th>
+			<th style="border:solid">E-MAİL</th>
+			<th style="border:solid">TC NO</th>
+			<th style="border:solid">TELEFON</th>
+			<th style="border:solid">POZİSYON</th>
+			<th style="border:solid">ÇALIŞTIĞI ŞUBE</th>
+			<th style="border:solid">İŞLEM</th>
+		</tr>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td style="border:solid" >@item.User.Name</td>
+				<td style="border:solid" >@item.User.Surname</td>
+				<td style="border:solid" >@item.User.UserName</td>
+				<td style="border:solid" >@item.User.Email</td>
+				<td style="border:solid" >@item.User.TcNo</td>
+				<td style="border:solid" >@item.User.PhoneNumber</td>
+				<td style="border:solid">@item.RoleName</td>
+				<td style="border:solid" >@item.BranchName</td>
+				<td style="border:solid" >
+					<div class=" rounded h-100 p-4">
+							<div class="m-n2">	
+							<a asp-controller="Admin" asp-action="EditUser" asp-area="Manager" asp-for-userid="@item.User.Id"
+						   asp-route-userid="@item.User.Id"
+			 class="btn btn-lg btn-lg-square btn-primary m-2">
+								<i class="fa fa-edit"></i>
+							</a>
+							<a asp-controller="Admin" asp-action="AssignBranch" asp-area="Manager"
+						   asp-route-userid="@item.User.Id" class="btn btn-lg btn-lg-square btn-primary m-2">
+								<i class="fa fa-street-view"></i>
+							</a>
+						</div>
+						
+					</div>
+				</td>
+			</tr>
+		}
+	</table>
+	<br />
+
+
+
+</div>
+
+
+<br />
+
+

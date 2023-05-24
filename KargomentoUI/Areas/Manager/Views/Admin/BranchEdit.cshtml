@@ -1,0 +1,177 @@
+@model BranchVM
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+<h2>Berk Kaya</h2>
+@{
+    ViewData["Title"] = "BranchEdit";
+    Layout = "~/Areas/Manager/Views/_LayoutAdminDark.cshtml";
+}
+<br />
+<form method="post" asp-action="BranchEdit" asp-controller="Admin" asp-area="Manager">
+    
+    <div class="col-12 col-md-8 offset-2 offset-2">
+
+        <h4 class="text-center">Guncelleyeceginiz Şube Bilgileri</h4>
+
+        
+        <div class="row">
+<input type="hidden" asp-for="Id"/>
+            <div class="col-12">
+                <span class="text-danger"
+                      style="font-weight:bold;margin-right:3px;">
+                    *
+                </span>
+                <label>İl:</label>
+                <input type="text" class="form-control" asp-for="District.City.Name" disabled="disabled"/>
+            </div>
+
+            <br/>
+
+            <div class="col-12">
+                <span class="text-danger"
+                      style="font-weight:bold;margin-right:3px;">
+                    *
+                </span>
+
+                <label>İlçe:</label>
+                <input type="text" class="form-control" asp-for="District.Name" disabled="disabled"/>
+            </div>
+            <div class="col-12">
+                <span class="text-danger"
+                      style="font-weight:bold;margin-right:3px;">
+                    *
+                </span>
+
+                <label>Şube:</label>
+                <div class="form-group mb-3">
+                    <input type="text" class="form-control" id="Sube" asp-for="Name">
+                </div>
+            </div>
+            <br/>
+
+            <div class="col-12">
+                <span class="text-danger"
+                      style="font-weight:bold;margin-right:3px;">
+                    *
+                </span>
+                <label>Detay:</label>
+                <div class="form-group mb-3">
+                    <input type="text" class="form-control" id="Detail" asp-for="Description">
+                </div>
+            </div>
+            <br>
+
+
+            <br/>
+
+
+            <br/>
+            <div class="row">
+                <div class="col-12 col-md-4 offset-4 offset-4">
+                    <button type="submit" class="btn btn-primary container"> GUNCELLE </button>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</form>
+
+
+
+    @* @section Scripts{ *@
+    @*     <script> *@
+    @* *@
+    @*         $(document).ready(function () { *@
+    @*             $("#cityselect").change(function () { *@
+    @* *@
+    @*                 // önce burada il değeri değişti anda ilçe ve mahalle comboları temizlenecek *@
+    @*                 $("#districtSelect").empty(); *@
+    @*                 $("#districtSelect").append("<option selected value='0'>***İlçe Seçiniz***</option>"); *@
+    @*                 $("#districtSelect").attr("disabled", true); *@
+    @* *@
+    @*                 // hangi ili seçtiğine bakacağız *@
+    @* *@
+    @*                 var cityid = $("#cityselect").val(); // this.value *@
+    @* *@
+    @*                 if (cityid > 0) { *@
+    @*                     $.ajax({ *@
+    @*                         type: "get", *@
+    @*                         url: '/CarrierCall/GetCityDistricts/' + cityid, *@
+    @*                         success: function (res) { *@
+    @*                             if (res.issuccess) { *@
+    @* *@
+    @*                                 console.log(res.data); *@
+    @*                                 //döngü kurup her ilçeyi comboya aktaracapız *@
+    @*                                 $.each(res.data, function () { *@
+    @*                                     $("#districtSelect").append("<option value=" + this.id + ">" + this.name + "</option>"); *@
+    @* *@
+    @* *@
+    @*                                 }); // döngü bitti *@
+    @* *@
+    @*                                 $("#districtSelect").attr("disabled", false); // aktif *@
+    @* *@
+    @*                             } *@
+    @*                             else { *@
+    @*                                 alert(res.message); *@
+    @*                             } *@
+    @*                         }, // success bitti *@
+    @*                         error: function (res) { *@
+    @*                             alert(res.message); *@
+    @*                         } *@
+    @*                     }); // ajax bitti *@
+    @*                 } // if bitti *@
+    @* *@
+    @*             });// cityselect bitti *@
+    @* *@
+    @*             $("#districtSelect").change(function () { *@
+    @* *@
+    @*                 // önce burada il değeri değişti anda ilçe ve mahalle comboları temizlenecek *@
+    @*                 $("#branchSelect").empty(); *@
+    @*                 $("#branchSelect").append("<option selected value='0'>***İlçe Seçiniz***</option>"); *@
+    @*                 $("#branchSelect").attr("disabled", true); *@
+    @* *@
+    @*                 // hangi ili seçtiğine bakacağız *@
+    @* *@
+    @*                 var districtid = $("#districtSelect").val(); // this.value *@
+    @*                 console.log(districtid); *@
+    @* *@
+    @*                 if (districtid > 0) { *@
+    @*                     $.ajax({ *@
+    @*                         type: "get", *@
+    @*                         url: '/CarrierCall/GetDistrictsBranch/' + districtid, *@
+    @*                         success: function (res) { *@
+    @*                             if (res.issuccess) { *@
+    @* *@
+    @*                                 console.log(res.data); *@
+    @*                                 //döngü kurup her ilçeyi comboya aktaracapız *@
+    @*                                 $.each(res.data, function () { *@
+    @*                                     $("#branchSelect").append("<option value=" + this.id + ">" + this.name + "</option>"); *@
+    @* *@
+    @* *@
+    @*                                 }); // döngü bitti *@
+    @* *@
+    @*                                 $("#branchSelect").attr("disabled", false); // aktif *@
+    @* *@
+    @*                             } *@
+    @*                             else { *@
+    @*                                 alert(res.message); *@
+    @*                             } *@
+    @*                         }, // success bitti *@
+    @*                         error: function (res) { *@
+    @*                             alert(res.message); *@
+    @*                         } *@
+    @*                     }); // ajax bitti *@
+    @*                 } // if bitti *@
+    @* *@
+    @*             });// cityselect bitti *@
+    @* *@
+    @*         }); // document ready bitti *@
+    @* *@
+    @*     </script> *@
+    @* } *@
+
+                                <

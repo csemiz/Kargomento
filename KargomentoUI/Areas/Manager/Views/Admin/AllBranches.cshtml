@@ -1,0 +1,44 @@
+﻿@model List<BranchVM>
+@{
+    ViewData["Title"] = "AllBranches";
+    Layout = "~/Areas/Manager/Views/_LayoutAdminDark.cshtml";
+}
+<br />
+<h5 class="text-center">Tum Subeler</h5>
+<br />
+<div class="col-12 col-md-3 offset-1 offset-1">
+    <a asp-controller="Admin" asp-action="NewBranchAdd"
+       asp-area="Manager" class="btn btn-primary container"> Yeni Sube Ekle</a>
+</div>
+<div class="col-12 col-md-10 offset-1 offset-1">
+    <div class="text-danger" asp-validation-summary="All"></div>
+
+    <table style="width:100%; border:solid" class="table table-hover">
+        <tr>
+            <th style="border:solid">IL</th>
+            <th style="border:solid">ILCE</th>
+            <th style="border:solid">SUBE ADI</th>
+            <th style="border:solid">DETAY</th>
+            <th style="border:solid">ISLEM</th>
+        </tr>
+    @foreach (var item in Model)
+        {
+           <tr>
+             <th style="border:solid">@item.District.City.Name</th>
+                <th style="border:solid">@item.District.Name</th>
+                <th style="border:solid">@item.Name</th>
+                <th style="border:solid">@item.Description</th>
+            <th style="border:solid">
+                <div class="row">
+                    <div class="col-md-12">
+                            <a asp-controller="Admin" asp-action="BranchEdit" asp-route-branchId="@item.Id" asp-area="Manager"
+                                class="btn btn-outline-primary m-2">Duzenle<i class="ms-2"></i></a>
+                    </div>
+                </div>
+            </th>
+        </tr>
+        }
+
+    </table>
+    <br />
+</div>

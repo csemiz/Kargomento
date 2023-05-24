@@ -1,0 +1,56 @@
+﻿@model List<CargoVM>
+
+@{
+    ViewData["Title"] = "IncomingCargo";
+	Layout = "~/Areas/Branch/Views/Shared/_LayoutBranch.cshtml";
+}
+
+<h3>ŞUBEYE GELEN KARGOLAR</h3>
+<div class="col-12 col-md-10 offset-1 offset-1">
+
+
+	<div class="text-danger" asp-validation-summary="All"></div>
+
+	<table style="width:100%; border:solid ">
+		<tr>
+			<th style="border:solid">Takip Numarası</th>
+			<th style="border:solid">Kayıt Tarihi</th>
+			<th style="border:solid">Gönderen</th>
+			<th style="border:solid">Alıcı</th>
+			<th style="border:solid">Kargo Durumu</th>
+
+		</tr>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td style="border:solid">@item.Id</td>
+				<td style="border:solid">@item.CreatedDate</td>
+				<td style="border:solid">@item.Sender?.Name @item.Sender?.Surname</td>
+				<td style="border:solid">@item.Receiver?.Name @item.Receiver?.Surname</td>
+				<td style="border:solid">
+		@*		@item.CargoStatusProcess.LastOrDefault().CargoStatus.StatusName*@
+				</td>
+
+				<td style="border:solid">
+					<div class="row">
+
+						<div class="col-md-12">
+							<a asp-controller="Home" asp-action="AssignAction" asp-area="Branch"
+						   asp-route-id="@item.Id"
+			 class="btn btn-outline-primary m-2">
+								İŞLEM ATA<i class="ms-2"></i>
+							</a>
+						</div>
+
+
+					</div>
+				</td>
+			</tr>
+		}
+	</table>
+	<br />
+
+
+
+</div>
+

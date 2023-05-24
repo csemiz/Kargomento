@@ -1,0 +1,159 @@
+﻿@model BranchVM
+@{
+    ViewData["Title"] = "NewBranchAdd";
+    Layout = "~/Areas/Manager/Views/_LayoutAdminDark.cshtml";
+}
+<br />
+<div class="col-12 col-md-8 offset-2 offset-2">
+
+    <h4 class="text-center">Ekleyeceginiz yeni subenin bilgilerini giriniz.</h4>
+    <form asp-controller="Admin" asp-action="NewBranchAdd" method="post">
+        <div class="row">
+            <div class="col-12">
+                <span class="text-danger"
+                      style="font-weight:bold;margin-right:3px;">
+                    *
+                </span>
+                <label>İl:</label>
+                <select class="form-control" id="cityselect">
+                    <option value="0">***Il Seciniz***</option>
+                    @foreach (var item in ViewBag.Cities as List<CityVM>)
+                    {
+                        <option value=@item.Id>@item.Name</option>
+                    }
+                </select>
+
+            </div>
+            <br />
+
+            <div class="col-12">
+                <span class="text-danger"
+                      style="font-weight:bold;margin-right:3px;">
+                    *
+                </span>
+                <label>Ilce:</label>
+                <select class="form-control" id="districtSelect" asp-for="DistrictId">
+                    <option value="0">***Ilce Seciniz***</option>
+                </select>
+            </div>
+            <br />
+
+            <div class="form-group">
+                <label>Yeni Sube Adi</label>
+                <input type="text" class="form-control" style="background-color:white" asp-for="Name" />
+            </div>
+            <br />
+
+            <div class="form-group">
+                <label>Adresi</label>
+                <input type="text" class="form-control" style="background-color:white" asp-for="Description" />
+            </div>
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-12 col-md-4 offset-4 offset-4">
+                    <button type="submit" class="btn btn-primary container">EKLE </button>
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+
+</div>
+
+
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+            $("#cityselect").change(function () {
+
+                // önce burada il değeri değişti anda ilçe ve mahalle comboları temizlenecek
+                $("#districtSelect").empty();
+                $("#districtSelect").append("<option selected value='0'>***İlçe Seçiniz***</option>");
+                $("#districtSelect").attr("disabled", true);
+
+                // hangi ili seçtiğine bakacağız
+
+                var cityid = $("#cityselect").val(); // this.value
+
+                if (cityid > 0) {
+                    $.ajax({
+                        type: "get",
+                        url: '/CarrierCall/GetCityDistricts/' + cityid,
+                        success: function (res) {
+                            if (res.issuccess) {
+
+                                console.log(res.data);
+                                //döngü kurup her ilçeyi comboya aktaracapız
+                                $.each(res.data, function () {
+                                    $("#districtSelect").append("<option value=" + this.id + ">" + this.name + "</option>");
+
+
+                                }); // döngü bitti
+
+                                $("#districtSelect").attr("disabled", false); // aktif
+
+                            }
+                            else {
+                                alert(res.message);
+                            }
+                        }, // success bitti
+                        error: function (res) {
+                            alert(res.message);
+                        }
+                    }); // ajax bitti
+                } // if bitti
+
+            });// cityselect bitti
+
+            $("#districtSelect").change(function () {
+
+                // önce burada il değeri değişti anda ilçe ve mahalle comboları temizlenecek
+                $("#branchSelect").empty();
+                $("#branchSelect").append("<option selected value='0'>***İlçe Seçiniz***</option>");
+                $("#branchSelect").attr("disabled", true);
+
+                // hangi ili seçtiğine bakacağız
+
+                var districtid = $("#districtSelect").val(); // this.value
+                console.log(districtid);
+
+                if (districtid > 0) {
+                    $.ajax({
+                        type: "get",
+                        url: '/CarrierCall/GetDistrictsBranch/' + districtid,
+                        success: function (res) {
+                            if (res.issuccess) {
+
+                                console.log(res.data);
+                                //döngü kurup her ilçeyi comboya aktaracapız
+                                $.each(res.data, function () {
+                                    $("#branchSelect").append("<option value=" + this.id + ">" + this.name + "</option>");
+
+
+                                }); // döngü bitti
+
+                                $("#branchSelect").attr("disabled", false); // aktif
+
+                            }
+                            else {
+                                alert(res.message);
+                            }
+                        }, // success bitti
+                        error: function (res) {
+                            alert(res.message);
+                        }
+                    }); // ajax bitti
+                } // if bitti
+
+            });// cityselect bitti
+
+        }); // document ready bitti
+
+
+
+    </script>
+    }
+

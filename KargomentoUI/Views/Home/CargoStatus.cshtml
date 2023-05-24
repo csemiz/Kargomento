@@ -1,0 +1,62 @@
+﻿@model List<CargoStatusProcessVM>
+@{
+    ViewData["Title"] = "CargoStatus";
+    Layout = "~/Views/Shared/_LayoutCargomento.cshtml";
+}
+
+
+
+<form asp-action="CargoStatus" asp-controller="Home" method="get">
+
+
+
+    <div class="ftco-blocks-cover-1">
+        <div class="ftco-cover-1 overlay" style="background-image: url('https://source.unsplash.com/pSyfecRCBQA/1920x780')">
+            <div class="container " >
+                <div class="row align-items-center">
+                    <div class="col-lg-6" style="margin-left:auto;margin-right:auto">
+
+                        @if (Model.Count == 0)
+                        {
+                            <h4 style="font-family:Arial; color:white ;text-align:center">Kargo bulunamadı.</h4>
+                        }
+                        else
+                        {
+                            int counter = 0;
+                            <table class="table table-hover table-bordered" id="phoneTable" style="background-color:white;">
+                                <thead>
+                                    <tr style="text-align:center">
+                                        <th>Sıra No</th>
+                                        <th>Eklendiği Tarih</th>
+                                        <th>Kargo No</th>
+                                        <th>Kargo Durumu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr style="text-align:center">
+                                            <td><b>@(counter += 1)</b></td>
+                                            <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                                            <td>@item.CargoId</td>
+                                            <td>@item.CargoStatus.StatusName</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+</form>
+

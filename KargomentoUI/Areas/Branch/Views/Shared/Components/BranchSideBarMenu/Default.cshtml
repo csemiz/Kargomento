@@ -1,0 +1,130 @@
+﻿<!-- [ navigation menu ] start -->
+<nav class="pcoded-navbar  ">
+	<div class="navbar-wrapper  ">
+		<div class="navbar-content scroll-div ">
+
+			<div class="">
+				<div class="main-menu-header">
+					<img class="img-radius" src="~/admintheme/assets/images/user/avatar-2.jpg" alt="User-Profile-Image">
+					<div class="user-details">
+						<span>KARGOMENTO</span>
+						<div id="more-details">Hızlı Kargo Şirketi<i class="fa fa-chevron-down m-l-5"></i></div>
+					</div>
+				</div>
+				<div class="collapse" id="nav-user-link">
+					<ul class="list-unstyled">
+						<li class="list-group-item"><a href="user-profile.html"><i class="feather icon-user m-r-5"></i>Profili Görüntüle</a></li>
+						<li class="list-group-item"><a href="#!"><i class="feather icon-settings m-r-5"></i>Ayarlar</a></li>
+						<li class="list-group-item"><a href="auth-normal-sign-in.html"><i class="feather icon-log-out m-r-5"></i>Çıkış Yap</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<ul class="nav pcoded-inner-navbar ">
+				<li class="nav-item pcoded-menu-caption">
+					<label>Şube İşlemleri</label>
+				</li>
+				<li class="nav-item">
+					<a href="index.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
+				</li>
+				<li class="nav-item"> 
+					<a type="button" asp-controller="Home" asp-action="CreateCargo" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus"></i></span><span class="pcoded-mtext">Yeni Kargo Oluştur</span></a> 
+
+
+
+
+
+
+				</li>
+				<li class="nav-item pcoded-hasmenu">
+					<a asp-controller="Home" asp-action="IncomingCargo" asp-area="Branch"
+						class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Şubeye Gelen Kargolar</span></a>
+					<ul class="pcoded-submenu">
+						<li><a href="layout-vertical.html" target="_blank">Tüm İşlemler</a></li>
+					</ul>
+				</li>
+
+				<li class="nav-item pcoded-hasmenu">
+					<a asp-controller="Admin" asp-action="OutgoingCargo" asp-area="Branch"
+						class="nav-link active"><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Şubeden Çıkan Kargolar</span></a>
+					<ul class="pcoded-submenu">
+						<li><a href="layout-vertical.html" target="_blank">Tüm İşlemler</a></li>
+					</ul>
+				</li>
+
+				<li class="nav-item pcoded-menu-caption">
+					<label>Kurye Çağırma İşlemleri</label>
+				</li>
+
+				<li class="nav-item pcoded-hasmenu">
+					<a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Alt Başlık 1</span></a>
+					<ul class="pcoded-submenu">
+						<li><a href="layout-vertical.html" target="_blank">İşlem 1</a></li>
+					</ul>
+				</li>
+
+				<li class="nav-item pcoded-hasmenu">
+					<a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Alt Başlık 2</span></a>
+					<ul class="pcoded-submenu">
+						<li><a href="layout-vertical.html" target="_blank">İşlem 1</a></li>
+					</ul>
+				</li>
+
+				<li class="nav-item pcoded-menu-caption">
+					<label>Gönderi Takip</label>
+				</li>
+				<li class="nav-item">
+					<a href="form_elements.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Gönderim Nerede?</span></a>
+				</li>
+				<li class="nav-item">
+					<a href="tbl_bootstrap.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-align-justify"></i></span><span class="pcoded-mtext">Form</span></a>
+				</li>
+
+				<li class="nav-item pcoded-menu-caption">
+					<label>Kampanyalar</label>
+				</li>
+				<li class="nav-item pcoded-hasmenu">
+					<a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Tümü</span></a>
+					<ul class="pcoded-submenu">
+						<li><a href="bc_alert.html">Bireysel Kampanyalar</a></li>
+						<li><a href="bc_button.html">Kurumsal Kampanyalar</a></li>
+						<li><a href="bc_badges.html">Geçmiş Kampanyalar</a></li>
+						</ul>
+				</li>
+				
+				<li class="nav-item pcoded-menu-caption">
+					<label>İletişim Formu</label>
+				</li>
+				<li class="nav-item">
+					<a href="chart-apex.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-pie-chart"></i></span><span class="pcoded-mtext">Çizelge</span></a>
+				</li>
+				<li class="nav-item">
+					<a href="map-google.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-map"></i></span><span class="pcoded-mtext">Harita</span></a>
+				</li>
+				<li class="nav-item pcoded-menu-caption">
+					<label>Sayfalar</label>
+				</li>
+				<li class="nav-item pcoded-hasmenu">
+					<a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">Kimlik Doğrulama</span></a>
+					<ul class="pcoded-submenu">
+						<li><a href="auth-signup.html" target="_blank">Kayıt Ol</a></li>
+						<li><a href="auth-signin.html" target="_blank">Giriş Yap</a></li>
+					</ul>
+				</li>
+
+			</ul>
+
+			<div class="card text-center">
+				<div class="card-block">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<i class="feather icon-sunset f-40"></i>
+					<h6 class="mt-3">Kargomento Premium abonesi olun.</h6>
+					<p>Herhangi bir desteğe ihtiyaç duyuyorsanız lütfen e-postayla bizimle iletişime geçin.</p>
+					<a href="https://1.envato.market/PgJNQ" target="_blank" class="btn btn-primary btn-sm text-white m-0">Güncelle</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</nav>
+<!-- [ navigation menu ] end -->

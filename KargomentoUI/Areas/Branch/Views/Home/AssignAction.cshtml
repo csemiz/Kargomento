@@ -1,0 +1,69 @@
+﻿@model CargoVM
+@{
+    ViewData["Title"] = "AssignAction";
+    Layout = "~/Areas/Branch/Views/Shared/_LayoutBranch.cshtml";
+}
+
+<div>
+
+
+<h3>@Model.Id </h3>
+
+<div>
+        <form asp-action="AssignAction" asp-controller="Home" method="post">
+
+            <div class="text-danger" asp-validation-summary="All"></div>
+            <div class="form-group">
+
+                <input type="hidden" asp-for="Id" />
+                <div>
+                    <span class="text-danger"
+                          style="font-weight:bold;margin-right:3px;">
+                        *
+                    </span>
+                    <label>Durumlar:</label>
+                    <select class="form-control" id="cityselect">
+                        <option value="0">***İşlem Seçiniz***</option>
+                        @foreach (var item in ViewBag.AllCargoStatus as List<CargoStatusVM>)
+                        {
+                            <option value=@item.Id>@item.StatusDescription</option>
+                        }
+                    </select>
+                </div>
+                <br />
+
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary container">
+                            İŞLEM ATA
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </form>
+</div>
+
+<br />
+
+<div>
+    <table class="table table-hover">
+        <tr>
+            <td>Tarih</td>
+            <td>Durum</td>
+        </tr>
+        @foreach (var item in Model.CargoStatusProcess)
+        {
+            <tr>
+                <td>@item.CargoStatus.CreatedDate</td>
+                <td>@item.CargoStatus.StatusName</td>
+            </tr>
+        }
+    </table>
+
+</div>
+
+</div>

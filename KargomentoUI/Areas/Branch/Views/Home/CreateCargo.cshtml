@@ -1,0 +1,272 @@
+﻿@using KargomentoEL.ViewModels;
+@model CargoVM;
+@{
+    ViewData["Title"] = "CreateCargo";
+    Layout = "~/Areas/Branch/Views/Shared/_LayoutBranch.cshtml";
+}
+
+
+<form asp-controller="Home" asp-action="CreateCargo" method="post">
+    <div class="col-12 col-md-12">
+        <h4 class="text-center">Yeni Kargo Talebi Oluştur</h4>
+
+
+        <div class="text-danger" asp-validation-summary="All"></div>
+        <div class="row">
+            <div class="col-6">
+                <h4 class="text-center">GÖNDEREN BİLGİLERİ</h4>
+
+                <div class="form-group">
+                    <label>İsim:</label>
+                    <input type="text" class="form-control" asp-for="Sender.Name" />
+                </div>
+
+                <div class="form-group">
+                    <label>Soyisim:</label>
+                    <input type="text" class="form-control" asp-for="Sender.Surname" />
+                </div>
+
+                <div class="form-group">
+                    <label>TC NO:</label>
+                    <input type="text" class="form-control" asp-for="Sender.Id" />
+                </div>
+
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="text" class="form-control" asp-for="Sender.Email" />
+                </div>
+
+                <div class="form-group">
+                    <label>Telefon:</label>
+                    <input type="tel" class="form-control" asp-for="Sender.Phone" />
+                </div>
+            </div>
+            <div class="col-6">
+                <h4 class="text-center">ALICI BİLGİLERİ</h4>
+
+                <div class="form-group">
+                    <label>İsim:</label>
+                    <input type="text" class="form-control" asp-for="Receiver.Name" />
+                </div>
+
+                <div class="form-group">
+                    <label>Soyisim:</label>
+                    <input type="text" class="form-control" asp-for="Receiver.Surname" />
+                </div>
+
+                <div class="form-group">
+                    <label>TC NO:</label>
+                    <input type="text" class="form-control" asp-for="Receiver.Id" />
+                </div>
+
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="text" class="form-control" asp-for="Receiver.Email" />
+                </div>
+
+                <div class="form-group">
+                    <label>Telefon:</label>
+                    <input type="tel" class="form-control" asp-for="Receiver.Phone" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                <span class="text-danger"
+                      style="font-weight:bold;margin-right:3px;">
+                    *
+                </span>
+                <label>İl:</label>
+                <select class="form-control" id="cityselect">
+                    <option value="0">***İl Seçiniz***</option>
+                    @foreach (var item in ViewBag.Cities as List<CityVM>)
+                    {
+                        <option value=@item.Id>@item.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-4">
+                <span class="text-danger"
+                      style="font-weight:bold;margin-right:3px;">
+                    *
+                </span>
+                <label>İlçe:</label>
+                <select class="form-control" id="districtSelect">
+                    <option value="0">***İlçe Seçiniz***</option>
+                </select>
+            </div>
+
+            <div class="col-4">
+                <span class="text-danger"
+                      style="font-weight:bold;margin-right:3px;">
+                    *
+                </span>
+                <label>Şube:</label>
+                <select class="form-control" id="branchSelect" asp-for="ReceiverBranchId">
+                    <option value="0">***Şube Seçiniz***</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Adres Detay:</label>
+            <input type="text" class="form-control" asp-for="ReceiverAddressDetails" />
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label>Kargo Desi:</label>
+                <input type="text" class="form-control" asp-for="Size" id="desi" onchange="calculatePrice()" />
+            </div>
+
+            <div class="col-3">
+                <label>Fiyat:</label>
+                <input type="text" class="form-control" id="fiyatValue" disabled/>
+            </div>
+
+            <div class="col-6">
+                <label>Ödeme:</label>
+                <select class="form-control" id="cargopaytypeselect" asp-for="CargoPayTypeId">
+                    <option value="0">***Ödeme Türü Seçiniz***</option>
+                    @foreach (var item in ViewBag.CargoPayTypes as List<CargoPayTypesVM>)
+                    {
+                        <option value=@item.Id>@item.PayTypesName</option>
+                    }
+                </select>
+            </div>
+
+        </div>
+
+        <br />
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary container">
+                    KAYDET
+                </button>
+            </div>
+
+
+        </div>
+
+    </div>
+</form>
+
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+
+            //ilçe ve mahalle comboları pasif olacak
+            $("#districtSelect").attr("disabled", true);
+            $("#cityselect").val(0);
+            $("#branchSelect").val(0);
+
+
+            $("#cityselect").change(function () {
+
+                // önce burada il değeri değişti anda ilçe ve mahalle comboları temizlenecek
+                $("#districtSelect").empty();
+                $("#districtSelect").append("<option selected value='0'>***İlçe Seçiniz***</option>");
+                $("#districtSelect").attr("disabled", true);
+
+                // hangi ili seçtiğine bakacağız
+
+                var cityid = $("#cityselect").val(); // this.value
+
+                if (cityid > 0) {
+                    $.ajax({
+                        type: "get",
+                        url: '/CarrierCall/GetCityDistricts/' + cityid,
+                        success: function (res) {
+                            if (res.issuccess) {
+
+                                console.log(res.data);
+                                //döngü kurup her ilçeyi comboya aktaracapız
+                                $.each(res.data, function () {
+                                    $("#districtSelect").append("<option selected value=" + this.id + ">" + this.name + "</option>");
+
+
+                                }); // döngü bitti
+
+                                $("#districtSelect").attr("disabled", false); // aktif
+
+                            }
+                            else {
+                                alert(res.message);
+                            }
+                        }, // success bitti
+                        error: function (res) {
+                            alert(res.message);
+                        }
+                    }); // ajax bitti
+                } // if bitti
+
+            });// cityselect bitti
+
+            $("#districtSelect").change(function () {
+
+                // önce burada il değeri değişti anda ilçe ve mahalle comboları temizlenecek
+                $("#brachSelect").empty();
+                $("#brachSelect").append("<option selected value='0'>***İlçe Seçiniz***</option>");
+                $("#brachSelect").attr("disabled", true);
+
+                // hangi ili seçtiğine bakacağız
+
+                var districtid = $("#districtSelect").val(); // this.value
+                console.log(districtid);
+
+                if (districtid > 0) {
+                    $.ajax({
+                        type: "get",
+                        url: '/CarrierCall/GetDistrictsBranch/' + districtid,
+                        success: function (res) {
+                            if (res.issuccess) {
+
+                                console.log(res.data);
+                                //döngü kurup her ilçeyi comboya aktaracapız
+                                $.each(res.data, function () {
+                                    $("#branchSelect").append("<option selected value=" + this.id + ">" + this.name + "</option>");
+
+
+                                }); // döngü bitti
+
+                                $("#branchSelect").attr("disabled", false); // aktif
+
+                            }
+                            else {
+                                alert(res.message);
+                            }
+                        }, // success bitti
+                        error: function (res) {
+                            alert(res.message);
+                        }
+                    }); // ajax bitti
+                } // if bitti
+
+            });// cityselect bitti
+
+           
+
+        }); // document ready bitti
+        function calculatePrice() {
+            var desi = document.getElementById('desi').value;
+            var fiyat = 0;
+
+            // Burada desi değerine göre fiyat hesaplaması yapabilirsiniz
+            // Örneğin, her desi için 10 birim fiyat uygulayalım
+            fiyat = desi * 3.75;
+
+            // Fiyat alanını güncelleme
+            document.getElementById('fiyatValue').value = fiyat.toFixed(2) + " TL";
+        }
+
+
+    </script>
+}
+
+
+
